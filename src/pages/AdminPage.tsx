@@ -119,7 +119,7 @@ export default function AdminPage() {
           <div className="mt-4 space-y-3">
             {Object.entries(settings?.features ?? {}).map(([k, v]) => (
               <div key={k} className="flex items-center justify-between rounded-lg border border-border/50 bg-surface-2/60 p-3 text-sm">
-                <span className="capitalize">{k.replaceAll("_"," ")}</span>
+                <span className="capitalize">{k.replace(/_/g, " ")}</span>
                 <span className={"font-mono text-[11px] " + (v ? "text-primary" : "text-muted-foreground")}>{v ? "ENABLED" : "DISABLED"}</span>
               </div>
             ))}
