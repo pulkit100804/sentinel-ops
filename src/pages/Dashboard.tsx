@@ -16,7 +16,7 @@ const trend = Array.from({ length: 24 }).map((_, i) => ({
 const recent = [
   { id: "SCN-8124", region: "Coastal Sector A", severity: "critical", time: "2m ago",  dmg: 92 },
   { id: "SCN-8123", region: "East Harbor",      severity: "high",     time: "14m ago", dmg: 78 },
-  { id: "SCN-8122", region: "Downtown Grid",    severity: "high",     time: "33m ago', dmg: 74".replace("'","\"") as any, },
+  { id: "SCN-8122", region: "Downtown Grid",    severity: "high",     time: "33m ago", dmg: 74 },
   { id: "SCN-8121", region: "Industrial Park",  severity: "moderate", time: "1h ago",  dmg: 58 },
   { id: "SCN-8120", region: "North Ridge",      severity: "low",      time: "2h ago",  dmg: 24 },
 ] as const;
