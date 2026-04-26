@@ -1,0 +1,11 @@
+flask
+flask-cors
+torch
+torchvision
+opencv-python-headless
+numpy
+matplotlib
+PyJWT
+bcrypt
+Pillow
+gunicorn

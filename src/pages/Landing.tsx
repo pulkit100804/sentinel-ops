@@ -144,7 +144,7 @@ export default function Landing() {
               <Button type="submit" disabled={submitting} className="mt-2 h-11 bg-gradient-primary font-medium shadow-elegant hover:opacity-95">
                 {submitting ? "Establishing channel…" : (<>Enter Command Center <ArrowRight className="ml-1 h-4 w-4" /></>)}
               </Button>
-              <p className="text-center font-mono text-[10px] text-muted-foreground">DEMO · any email/password works</p>
+              <p className="text-center font-mono text-[10px] text-muted-foreground">Secured with database authentication</p>
             </div>
           </form>
         </section>

@@ -6,11 +6,10 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/services/api";
 import { useAnalysis } from "@/context/AnalysisContext";
 import { toast } from "@/hooks/use-toast";
-import { SAMPLE_ASSETS } from "@/services/mockApi";
 
 const STEPS = [
+  "Uploading to inference server",
   "Preprocessing image",
-  "Loading model weights",
   "Running inference",
   "Postprocessing mask",
   "Generating output",
@@ -18,18 +17,19 @@ const STEPS = [
 
 export default function ProcessingPage() {
   const navigate = useNavigate();
-  const { upload, setPrediction, setUpload } = useAnalysis();
+  const { upload, setPrediction } = useAnalysis();
   const [pct, setPct] = useState(0);
   const [stepIdx, setStepIdx] = useState(0);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    // if user refreshed, synthesize an upload so the demo flow works
-    const uid = upload?.upload_id ?? "up_demo_" + Date.now();
-    if (!upload) setUpload({ upload_id: uid, url: SAMPLE_ASSETS.after, filename: "sample.jpg", size: 1024 * 400 });
+    if (!upload) {
+      navigate("/upload");
+      return;
+    }
 
     let active = true;
-    api.predict(uid, (label, p) => {
+    api.predict(upload.upload_id, (label, p) => {
       if (!active) return;
       setPct(p);
       const idx = STEPS.findIndex(s => label.startsWith(s));
@@ -47,7 +47,7 @@ export default function ProcessingPage() {
       <PageHeader
         eyebrow="STEP 02 · INFERENCE"
         title="Processing model"
-        description="Running disaster damage segmentation on GPU. Please wait — this typically completes in ~3 seconds."
+        description="Running disaster damage segmentation. Please wait — this typically completes in a few seconds."
       />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1.3fr]">
@@ -55,7 +55,7 @@ export default function ProcessingPage() {
           <div className="absolute inset-0 grid-bg opacity-30" aria-hidden />
           <div className="relative">
             <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest text-primary">
-              <Cpu className="h-3.5 w-3.5" /> CUDA:0 · damage-seg-v1.2.pth
+              <Cpu className="h-3.5 w-3.5" /> unet-disaster-v1.0 · {typeof window !== "undefined" ? "Processing" : ""}
             </div>
             <div className="mt-6 flex items-end justify-between">
               <div className="font-display text-6xl font-semibold tabular-nums">{pct}%</div>

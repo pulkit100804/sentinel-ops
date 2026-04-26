@@ -19,9 +19,11 @@ function buildPrediction(upload_id: string): PredictionResult {
     id: "pred_" + Math.random().toString(36).slice(2, 9),
     upload_id,
     status: "completed",
-    input_url: afterImg,
+    input_url: beforeImg,
+    post_url: afterImg,
     output_url: afterImg,
     mask_url: maskImg,
+    heatmap_url: maskImg,
     severity_score: 78,
     damage_percentage: 62.4,
     risk_level: "high",
@@ -29,9 +31,9 @@ function buildPrediction(upload_id: string): PredictionResult {
     buildings_damaged: 327,
     estimated_population: 8420,
     metadata: {
-      model_version: "damage-seg-v1.2.pth",
+      model_version: "unet-disaster-v2.0",
       inference_ms: 1243,
-      image_size: [1024, 1024],
+      image_size: [256, 256],
       timestamp: new Date().toISOString(),
     },
     class_distribution: [
@@ -75,7 +77,7 @@ export const mockApi = {
   async upload(file: File): Promise<UploadResult> {
     await delay(700);
     const url = URL.createObjectURL(file);
-    return { upload_id: "up_" + Date.now(), url, filename: file.name, size: file.size };
+    return { upload_id: "up_" + Date.now(), pre_url: url, post_url: url, pre_filename: file.name, post_filename: file.name, size: file.size };
   },
 
   async predict(upload_id: string, onProgress?: (step: string, pct: number) => void): Promise<PredictionResult> {
